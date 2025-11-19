@@ -21,3 +21,15 @@ docker compose ps
 
 # Остановка
 docker compose down
+```
+
+## 📁 Структура проекта
+
+```
+p2p-payment-system-chelenkov/
+├── payment-service/   # Spring Boot микросервис
+├── docs/              # Документация
+└── docker-compose.yml # PostgreSQL + Redis
+```
+
+
