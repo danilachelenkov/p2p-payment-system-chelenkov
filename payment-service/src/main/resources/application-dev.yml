@@ -1,0 +1,64 @@
+# DEV PROFILE - Локальная разработка
+
+spring:
+  # Подключение к PostgreSQL из Docker
+  datasource:
+    url: jdbc:postgresql://localhost:5434/p2p_payment_db
+    username: dan4e
+    password: 12345678Ll
+    driver-class-name: org.postgresql.Driver
+
+    # HikariCP настройки (connection pool)
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-timeout: 30000      # время которое ждет запрос ,чтобы ему предоставили соединенеи из пула
+      idle-timeout: 600000           # время жизни простаивающего соединения
+      max-lifetime: 1800000          # максимальное время жизни любого соединения (простаивающего или рабочего)
+      auto-commit: false             # отключение автокомита, полезно если ты управляешь транзакией
+      validation-timeout: 5000       # время за которое должно быть подтверждено что соединение живое
+      connection-init-sql: SELECT 1  # запрос для определения состояния БД
+
+  # JPA/Hibernate
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true              # Показывать SQL запросы в консоли
+    properties:
+      hibernate:
+        format_sql: true        # Форматировать SQL для читаемости
+        use_sql_comments: true
+    hibernate:
+      ddl-auto: validate         # ВАЖНО! Liquibase управляет схемой, не Hibernate
+    open-in-view: false          # Рекомендуется отключить, чтобы избежать LazyInitializationException
+
+  # Redis подключение
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: redis_password
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: 1000ms
+          test-on-borrow: true            # Проверить соединение перед выдачей (безопасно, но медленнее)
+          test-on-return: false           # Проверить при возврате (обычно не нужно)
+          test-while-idle: true           # Проверять простаивающие соединения.
+          time-between-eviction-runs: 30s # Как часто проверять.
+          min-evictable-idle-time: 60s    # Через сколько удалить простаивающее соединение.
+
+  # Liquibase миграции
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+    default-schema: public
+
+# Логирование SQL с параметрами
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    ru.chelenkov.paymentservice: DEBUG

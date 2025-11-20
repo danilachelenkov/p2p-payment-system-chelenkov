@@ -1,0 +1,35 @@
+# Общие настройки
+spring:
+  application:
+    name: payment-service
+
+# Профиль по умолчанию
+  profiles:
+    active: dev
+
+# Настройки сервера
+server:
+  port: 8080
+  shutdown: graceful
+
+# Логирование
+logging:
+  level:
+    root: info
+    ru.chelenkov.paymentservice: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%level] [%logger{36}] - %msg%n"
+
+# Для Actuator настройка
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+
+
+
