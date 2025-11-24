@@ -1,0 +1,46 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-insert-test-users
+      author: Chelenkov Danila
+      context: dev
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: johan@gmail.com
+              - column:
+                  name: phone_number
+                  value: +1234567766
+              - column:
+                  name: first_name
+                  value: Sasha
+              - column:
+                  name: last_name
+                  value: Popov
+              - column:
+                  name: status
+                  value: SUSPEND
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: stiv@gmail.com
+              - column:
+                  name: phone_number
+                  value: +9991167766
+              - column:
+                  name: first_name
+                  value: Stanislav
+              - column:
+                  name: last_name
+                  value: Lem
+              - column:
+                  name: status
+                  value: ACTIVE
+      rollback:
+        - delete:
+            tableName: users
+            where: email IN ('johan@gmail.com','stiv@gmail.com')

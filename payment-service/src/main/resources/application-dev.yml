@@ -12,11 +12,11 @@ spring:
     hikari:
       maximum-pool-size: 5
       minimum-idle: 2
-      connection-timeout: 30000      # время которое ждет запрос ,чтобы ему предоставили соединенеи из пула
+      connection-timeout: 30000      # время которое ждет запрос, чтобы ему предоставили соединенеи из пула
       idle-timeout: 600000           # время жизни простаивающего соединения
       max-lifetime: 1800000          # максимальное время жизни любого соединения (простаивающего или рабочего)
       auto-commit: false             # отключение автокомита, полезно если ты управляешь транзакией
-      validation-timeout: 5000       # время за которое должно быть подтверждено что соединение живое
+      validation-timeout: 5000       # время за которое должно быть подтверждено, что соединение живое
       connection-init-sql: SELECT 1  # запрос для определения состояния БД
 
   # JPA/Hibernate
@@ -44,17 +44,14 @@ spring:
           max-idle: 8
           min-idle: 2
           max-wait: 1000ms
-          test-on-borrow: true            # Проверить соединение перед выдачей (безопасно, но медленнее)
-          test-on-return: false           # Проверить при возврате (обычно не нужно)
-          test-while-idle: true           # Проверять простаивающие соединения.
-          time-between-eviction-runs: 30s # Как часто проверять.
-          min-evictable-idle-time: 60s    # Через сколько удалить простаивающее соединение.
 
   # Liquibase миграции
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
     default-schema: public
+    drop-first: false
+    contexts: dev
 
 # Логирование SQL с параметрами
 logging:
