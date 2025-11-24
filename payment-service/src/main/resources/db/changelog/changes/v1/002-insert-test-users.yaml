@@ -12,7 +12,7 @@ databaseChangeLog:
                   value: johan@gmail.com
               - column:
                   name: phone_number
-                  value: +1234567766
+                  value: "+1234567766"
               - column:
                   name: first_name
                   value: Sasha
@@ -30,7 +30,7 @@ databaseChangeLog:
                   value: stiv@gmail.com
               - column:
                   name: phone_number
-                  value: +9991167766
+                  value: "+9991167766"
               - column:
                   name: first_name
                   value: Stanislav
