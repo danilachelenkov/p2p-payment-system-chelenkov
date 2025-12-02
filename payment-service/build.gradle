@@ -45,3 +45,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+bootJar {
+	archiveBaseName = 'payment-service'
+	archiveVersion = project.version
+}
+
+springBoot {
+	buildInfo()
+}

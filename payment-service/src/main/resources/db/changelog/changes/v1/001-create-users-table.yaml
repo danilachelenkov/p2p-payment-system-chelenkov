@@ -1,0 +1,79 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-users-table
+      author: Chelenkov Danila
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  remarks: "Идентификатор клиента"
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                    nullable: false
+              - column:
+                  name: email
+                  remarks: "Электронная почта"
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  remarks: "Номер телефона клиента"
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  remarks: "Имя клиента"
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  remarks: "Фамилия клиента"
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  remarks: "Текущий статус клиента"
+                  type: varchar(30)
+                  defaultValue: "ACTIVE"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  remarks: "Дата-время регистрации клиента"
+                  type: datetime
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  remarks: "Дата-время изменения данных клиента"
+                  type: datetime
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: true
+
+        - createIndex:
+            indexName: idx_users_email
+            unique: true
+            tableName: users
+            columns:
+              - column:
+                  name: email
+        - createIndex:
+            indexName: idx_users_phone
+            tableName: users
+            columns:
+              - column:
+                  name: phone_number
+      rollback:
+        - dropTable:
+            tableName: users

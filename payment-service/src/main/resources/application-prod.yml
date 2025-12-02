@@ -1,6 +1,10 @@
 # PROD PROFILE - Production окружение
 
 spring:
+  security:
+    user:
+      name: admin
+      password: ${ACTUATOR_PASSWORD:changeme}
   # Подключение к PostgreSQL из переменных окружения
   datasource:
     url: ${DATABASE_URL}
@@ -48,7 +52,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: health,info,prometheus  # Только публичные endpoints
+      base-path: /actuator
   endpoint:
     health:
-      show-details: when-authorized
+      show-details: when-authorized  # Детали только для авторизованных
+  health:
+    redis:
+      enabled: true
+    db:
+      enabled: true
+
